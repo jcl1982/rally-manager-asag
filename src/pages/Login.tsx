@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,50 +9,44 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useNavigate, Link } from 'react-router-dom';
 
-const registerSchema = z.object({
+const loginSchema = z.object({
   email: z.string().email('Email invalide'),
-  password: z.string().min(6, 'Le mot de passe doit contenir au moins 6 caractères'),
-  confirmPassword: z.string()
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'Les mots de passe ne correspondent pas',
-  path: ['confirmPassword']
+  password: z.string().min(1, 'Le mot de passe est requis')
 });
 
-type RegisterFormData = z.infer<typeof registerSchema>;
+type LoginFormData = z.infer<typeof loginSchema>;
 
-const Register: React.FC = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema)
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema)
   });
 
-  const onSubmit = async (data: RegisterFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     try {
-      const { error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password
       });
 
       if (error) {
-        toast.error('Erreur lors de la création du compte', {
+        toast.error('Erreur de connexion', {
           description: error.message
         });
         return;
       }
 
-      toast.success('Compte créé avec succès', {
-        description: 'Veuillez vérifier votre email'
-      });
+      toast.success('Connexion réussie');
       navigate('/');
     } catch (error) {
-      console.error('Signup error', error);
+      console.error('Login error', error);
       toast.error('Une erreur est survenue');
     }
   };
 
   return (
     <div className="container max-w-md mx-auto py-12">
-      <h1 className="text-3xl font-bold mb-6 text-center">Créer un compte</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Connexion</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="block mb-2">Email</label>
@@ -73,26 +68,16 @@ const Register: React.FC = () => {
           {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
         </div>
 
-        <div>
-          <label className="block mb-2">Confirmer le mot de passe</label>
-          <Input 
-            type="password" 
-            {...register('confirmPassword')}
-            placeholder="Confirmez le mot de passe" 
-          />
-          {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
-        </div>
-
         <Button type="submit" className="w-full">
-          Créer mon compte
+          Se connecter
         </Button>
         
         <div className="text-center mt-4">
-          <p>Vous avez déjà un compte ? <Link to="/login" className="text-ffsa-blue hover:underline">Se connecter</Link></p>
+          <p>Vous n'avez pas de compte ? <Link to="/register" className="text-ffsa-blue hover:underline">Créer un compte</Link></p>
         </div>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default Login;
