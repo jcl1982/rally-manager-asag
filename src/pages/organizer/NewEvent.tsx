@@ -17,25 +17,32 @@ import { Input } from "@/components/ui/input";
 
 interface EventFormData {
   name: string;
-  date: string;
+  start_date: string;
+  end_date: string;
   location: string;
   description: string;
 }
 
 const NewEvent = () => {
   const navigate = useNavigate();
-  const form = useForm<EventFormData>();
+  const form = useForm<EventFormData>({
+    defaultValues: {
+      end_date: "",
+    }
+  });
 
   const onSubmit = async (data: EventFormData) => {
     try {
-      const { error } = await supabase.from("rallies").insert([
-        {
-          name: data.name,
-          date: data.date,
-          location: data.location,
-          description: data.description,
-        },
-      ]);
+      const { error } = await supabase.from("rallies").insert({
+        name: data.name,
+        start_date: data.start_date,
+        end_date: data.end_date || data.start_date, // Use start_date as end_date if not provided
+        location: data.location,
+        description: data.description,
+        registration_open: true, // Default value
+        status: "upcoming", // Default value
+        is_upcoming: true, // Default value
+      });
 
       if (error) throw error;
 
@@ -69,10 +76,24 @@ const NewEvent = () => {
 
           <FormField
             control={form.control}
-            name="date"
+            name="start_date"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Date</FormLabel>
+                <FormLabel>Date de début</FormLabel>
+                <FormControl>
+                  <Input type="date" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="end_date"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Date de fin (optionnelle)</FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
                 </FormControl>

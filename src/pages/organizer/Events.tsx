@@ -10,9 +10,11 @@ import { Link } from "react-router-dom";
 interface RallyEvent {
   id: string;
   name: string;
-  date: string;
+  start_date: string;
+  end_date: string;
   location: string;
   status: string;
+  description?: string;
 }
 
 const Events = () => {
@@ -22,7 +24,7 @@ const Events = () => {
       const { data, error } = await supabase
         .from("rallies")
         .select("*")
-        .order("date", { ascending: true });
+        .order("start_date", { ascending: true });
 
       if (error) throw error;
       return data as RallyEvent[];
@@ -54,7 +56,7 @@ const Events = () => {
                 <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
                 <div className="flex items-center text-muted-foreground mb-2">
                   <CalendarDays className="w-4 h-4 mr-2" />
-                  {new Date(event.date).toLocaleDateString()}
+                  {new Date(event.start_date).toLocaleDateString()}
                 </div>
                 <p className="text-muted-foreground">{event.location}</p>
               </div>
