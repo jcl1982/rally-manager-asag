@@ -16,6 +16,7 @@ import CompetitorSpace from "./pages/CompetitorSpace";
 import OrganizerSpace from "./pages/OrganizerSpace";
 import OrganizerEvents from "./pages/organizer/Events";
 import NewEvent from "./pages/organizer/NewEvent";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 
@@ -37,8 +38,7 @@ const App = () => (
             <Route path="/organizer" element={<OrganizerSpace />} />
             <Route path="/organizer/events" element={<OrganizerEvents />} />
             <Route path="/organizer/events/new" element={<NewEvent />} />
-            <Route path="/login" element={<h1>Page de connexion à venir</h1>} />
-            <Route path="/register" element={<h1>Page d'inscription à venir</h1>} />
+            <Route path="/register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
