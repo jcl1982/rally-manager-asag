@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +13,8 @@ import Equipment from "./pages/Equipment";
 import Registrations from "./pages/Registrations";
 import CompetitorSpace from "./pages/CompetitorSpace";
 import OrganizerSpace from "./pages/OrganizerSpace";
+import OrganizerEvents from "./pages/organizer/Events";
+import NewEvent from "./pages/organizer/NewEvent";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,8 @@ const App = () => (
             <Route path="/registrations" element={<Registrations />} />
             <Route path="/competitor" element={<CompetitorSpace />} />
             <Route path="/organizer" element={<OrganizerSpace />} />
+            <Route path="/organizer/events" element={<OrganizerEvents />} />
+            <Route path="/organizer/events/new" element={<NewEvent />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
