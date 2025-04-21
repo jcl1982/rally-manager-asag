@@ -10,6 +10,7 @@ import {
   Calendar,
   Menu,
   X,
+  UserCheck,
 } from "lucide-react";
 
 const Header: React.FC = () => {
@@ -22,8 +23,8 @@ const Header: React.FC = () => {
   const navLinks = [
     { name: "Accueil", path: "/", icon: <Calendar className="mr-2 h-4 w-4" /> },
     { name: "Épreuves", path: "/events", icon: <FileText className="mr-2 h-4 w-4" /> },
-    { name: "Équipements", path: "/equipment", icon: <ClipboardList className="mr-2 h-4 w-4" /> },
-    { name: "Engagements", path: "/registrations", icon: <Car className="mr-2 h-4 w-4" /> },
+    { name: "Espace concurrent", path: "/competitor", icon: <UserCheck className="mr-2 h-4 w-4" /> },
+    { name: "Espace organisateur", path: "/organizer", icon: <UserCheck className="mr-2 h-4 w-4" /> },
   ];
 
   return (

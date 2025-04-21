@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +12,8 @@ import EventDetails from "./pages/EventDetails";
 import Registration from "./pages/Registration";
 import Equipment from "./pages/Equipment";
 import Registrations from "./pages/Registrations";
+import CompetitorSpace from "./pages/CompetitorSpace";
+import OrganizerSpace from "./pages/OrganizerSpace";
 
 const queryClient = new QueryClient();
 
@@ -28,7 +31,8 @@ const App = () => (
             <Route path="/events/:id/register" element={<Registration />} />
             <Route path="/equipment" element={<Equipment />} />
             <Route path="/registrations" element={<Registrations />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/competitor" element={<CompetitorSpace />} />
+            <Route path="/organizer" element={<OrganizerSpace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
