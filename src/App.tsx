@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -36,6 +37,8 @@ const App = () => (
             <Route path="/organizer" element={<OrganizerSpace />} />
             <Route path="/organizer/events" element={<OrganizerEvents />} />
             <Route path="/organizer/events/new" element={<NewEvent />} />
+            <Route path="/login" element={<h1>Page de connexion à venir</h1>} />
+            <Route path="/register" element={<h1>Page d'inscription à venir</h1>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
